@@ -2,7 +2,21 @@
 body {
     font-family: 'Noto Sans Japanese',sans-serif;
     padding-bottom: 40px;
-    color: #5a5a5a;
+}
+.bg1{
+    background-color: #0487D9;
+}
+.bg2{
+    background-color: #F2F2F2;
+}
+.bg3{
+    background-color: #05DBF2;
+}
+.bg4{
+    background-color: #0ff2f2;
+}
+.bg5{
+    background-color: #f2e96d;
 }
 .main-text{
     padding-left: 30px;
