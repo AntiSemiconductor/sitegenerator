@@ -12,7 +12,8 @@ headerContext = field "header" $ \item -> return $ itemBody item
 main :: IO ()
 main = hakyll $ do
   -- files not modified
-  forM_ ["img/*","fonts/*","texts/*"] $ \pat -> match pat $ do
+  forM_ ["img/*" .||. "img/header/*"
+        ,"fonts/*","texts/*"] $ \pat -> match pat $ do
     route idRoute
     compile copyFileCompiler
   -- css files,which is shrinked
