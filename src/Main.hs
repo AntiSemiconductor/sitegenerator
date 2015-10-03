@@ -7,6 +7,9 @@ import Control.Monad
 myContext :: Context String
 myContext = defaultContext
 
+clayCompiler :: Compiler (Item String)
+clayCompiler = getResourceString
+                >>= withItemBody (unixFilter "cabal" ["exec","--","runghc"])
 headerContext :: Context String
 headerContext = field "header" $ \item -> return $ itemBody item
 main :: IO ()
@@ -17,10 +20,13 @@ main = hakyll $ do
     route idRoute
     compile copyFileCompiler
   -- css files,which is shrinked
-  match "css/*" $ do
+  match "css/*.css" $ do
     route idRoute
     compile compressCssCompiler
   -- templates
+  match "css/*.hs" $ do
+    route $ setExtension "css"
+    compile clayCompiler
   match "templates/*" $ do
     compile templateCompiler
   -- specified files
@@ -39,7 +45,9 @@ indexCompiler = do
   itm <- getResourceBody
   itm' <- applyAsTemplate myContext itm
   addHeader itm' >>= defaultLayout
+
 addHeader :: Item String -> Compiler (Item String)
 addHeader = loadAndApplyTemplate "templates/header.html" myContext
+
 defaultLayout :: Item String -> Compiler (Item String)
 defaultLayout = loadAndApplyTemplate "templates/default.html" myContext
