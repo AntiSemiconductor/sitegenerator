@@ -29,6 +29,13 @@ newsHead = s1 >> s2
           backgroundColor color2
         s2 = star # (byClass "news-head") ** h1 # (byClass "heading") ? do
           fontSize $ em 5
+
+defaultFontFamily :: Css
+defaultFontFamily = fontFamily [ "Shuei KakuGo Gin L"
+                               , "Helvetica Neue"
+                               , "Helvetica"
+                               , "Arial"
+                               ] [sansSerif]
 stylesEnabled :: Css
 stylesEnabled = sequence_
                 [ mainTextStyle
@@ -36,9 +43,17 @@ stylesEnabled = sequence_
                 , newsHead
                 , sectionSetting
                 , bodyStyle
+                , footerStyle
+                , carouselHeaderStyle
                 ]
+
+footerStyle :: Css
+footerStyle = footer ? do
+  marginTop    $ px 20
+  marginBottom $ px 50
 bodyStyle :: Css
 bodyStyle = body ? do
+  defaultFontFamily
   paddingTop $ px 50
 sectionSetting :: Css
 sectionSetting = section |> (C.div # byClass "container") ? do
@@ -46,8 +61,8 @@ sectionSetting = section |> (C.div # byClass "container") ? do
   paddingBottom $ px 40
 mainTextStyle :: Css
 mainTextStyle = byClass "main-text" & do
-  paddingLeft  $ px 30
-  paddingRight $ px 30
+  paddingLeft  $ px 60
+  paddingRight $ px 60
   background    white
   return ()
 
@@ -60,3 +75,18 @@ navBarStyle = nbWrapper
       right  $ px 0
       left   $ px 0
       zIndex $ 20
+    navBarColors = byClass "navbar-antisemiconductor" & do
+      color $ color3
+      backgroundColor $ color3
+
+carouselHeaderStyle :: Css
+carouselHeaderStyle =
+  carousel ** star # byClass "item" ? do
+    height $ px 400
+    width  $ auto
+    backgroundSize $ cover
+    backgroundPosition $ placed sideCenter sideBottom
+    return ()
+  where
+    carousel = star # byClass "carousel"
+--    carouselImage = star # byClass "carousel" ** star # item |> img
