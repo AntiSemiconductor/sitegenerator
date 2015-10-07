@@ -9,7 +9,8 @@ myContext = defaultContext
 
 clayCompiler :: Compiler (Item String)
 clayCompiler = getResourceString
-                >>= withItemBody (unixFilter "cabal" ["exec","--","runghc"])
+                >>= withItemBody (unixFilter "cabal" ["run"])
+
 headerContext :: Context String
 headerContext = field "header" $ \item -> return $ itemBody item
 main :: IO ()
@@ -24,6 +25,9 @@ main = hakyll $ do
     route idRoute
     compile compressCssCompiler
   -- templates
+  match "css-hs/Main.hs" $ do
+    route $ constRoute "css/styles.css"
+    compile clayCompiler
   match "css/*.hs" $ do
     route $ setExtension "css"
     compile clayCompiler

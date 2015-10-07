@@ -1,8 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
+module Main where
 import Prelude hiding ((**))
+import Carousel
 import Clay hiding (div)
 import qualified Clay as C
-
 -- Theme Colors
 color1 :: Color
 color1 = rgb 0x04 0x87 0xD9
@@ -15,7 +16,6 @@ color3 = rgb 0x05 0xDB 0xF2
 
 color4 :: Color
 color4 = rgb 0x0f 0xf2 0xf2
-
 color5 :: Color
 color5 = rgb 0xf2 0xe9 0x6d
 
@@ -46,7 +46,6 @@ stylesEnabled = sequence_
                 , footerStyle
                 , carouselHeaderStyle
                 ]
-
 footerStyle :: Css
 footerStyle = footer ? do
   marginTop    $ px 20
@@ -78,15 +77,3 @@ navBarStyle = nbWrapper
     navBarColors = byClass "navbar-antisemiconductor" & do
       color $ color3
       backgroundColor $ color3
-
-carouselHeaderStyle :: Css
-carouselHeaderStyle =
-  carousel ** star # byClass "item" ? do
-    height $ px 400
-    width  $ auto
-    backgroundSize $ cover
-    backgroundPosition $ placed sideCenter sideBottom
-    return ()
-  where
-    carousel = star # byClass "carousel"
---    carouselImage = star # byClass "carousel" ** star # item |> img
