@@ -6,13 +6,13 @@ import Control.Monad
 
 myContext :: Context String
 myContext = defaultContext
-
 clayCompiler :: Compiler (Item String)
 clayCompiler = getResourceString
-                >>= withItemBody (unixFilter "cabal" ["run"])
+                >>= withItemBody (unixFilter "cabal" ["run","css-compiler"])
 
 headerContext :: Context String
 headerContext = field "header" $ \item -> return $ itemBody item
+
 main :: IO ()
 main = hakyll $ do
   -- files not modified
@@ -25,7 +25,7 @@ main = hakyll $ do
     route idRoute
     compile compressCssCompiler
   -- templates
-  match "css-hs/Main.hs" $ do
+  match "css-hs/*.hs" $ do
     route $ constRoute "css/styles.css"
     compile clayCompiler
   match "css/*.hs" $ do
@@ -37,7 +37,7 @@ main = hakyll $ do
   match "js/*" $ do
     route idRoute
     compile copyFileCompiler
-  match ("index.html") $ do
+  match ("index.html" .||. "about-sora.html") $ do
     route idRoute
     compile indexCompiler
   match ("contact.html") $ do

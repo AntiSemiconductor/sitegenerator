@@ -5,14 +5,24 @@ module Carousel
 import Prelude hiding ((**))
 import qualified Clay as C
 import Clay hiding (div)
+carousel :: Selector
+carousel = star # byClass "carousel"
+
 carouselHeaderStyle :: Css
-carouselHeaderStyle =
-  carousel ** star # byClass "item" ? do
-    height $ px 400
-    width  $ auto
+carouselHeaderStyle = do
+  carousel ? do
+    star # byClass "item" ? do
+      height $ px 400
+      width  $ pct 100
+      backgroundSize $ cover
+      backgroundPosition $ placed sideCenter sideBottom
+      return ()
+
+carouselStyle :: Css
+carouselStyle = carousel ? do
+  star # byClass "item" ? do
+    --height $ px 400
+    width  $ pct 100
     backgroundSize $ cover
     backgroundPosition $ placed sideCenter sideBottom
     return ()
-  where
-    carousel = star # byClass "carousel"
---    carouselImage = star # byClass "carousel" ** star # item |> img
