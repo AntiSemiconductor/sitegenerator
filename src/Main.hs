@@ -16,7 +16,7 @@ headerContext = field "header" $ \item -> return $ itemBody item
 main :: IO ()
 main = hakyll $ do
   -- files not modified
-  forM_ ["img/*" .||. "img/header/*"
+  forM_ ["img/**"
         ,"fonts/*","texts/*"] $ \pat -> match pat $ do
     route idRoute
     compile copyFileCompiler

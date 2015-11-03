@@ -20,17 +20,16 @@ main = putCss stylesEnabled
                     , footerStyle
                     , carouselHeaderStyle
                     , headingStyle
-                    , soraProfileStyle
+                    , mapImage
                     ]
 newsHead :: Css
-newsHead = s1 >> s2
-  where s1 = byClass "news-head" & do
-          textAlign $ alignSide sideCenter
-          color color1
-          backgroundColor color2
-        s2 = star # (byClass "news-head") ** h1 # (byClass "heading") ? do
+newsHead = byClass "news-head" & do
+  textAlign $ alignSide sideCenter
+  color color1
+  backgroundColor color2
+  h1 # (byClass "heading") ? do
+    fontSize $ em 5
 
-          fontSize $ em 5
 headingStyle :: Css
 headingStyle = byClass "heading" & do
   headerFontFamily
@@ -46,18 +45,18 @@ defaultFonts = [ "Arial"
                , "MS PGothic"
                ]
 
+mapImage :: Css
+mapImage = byClass "map-img" & do
+  height $ auto
+  width  $ em 20
+
 headerFontFamily :: Css
 headerFontFamily = fontFamily defaultFonts [sansSerif]
 
 defaultFontFamily :: Css
 defaultFontFamily = fontFamily
                     ([ "Shuei KakuGo Gin L"
-                    ] ++ defaultFonts) [sansSerif]
-
-
-soraProfileStyle :: Css
-soraProfileStyle = do
-  return ()
+                     ] ++ defaultFonts) [sansSerif]
 
 footerStyle :: Css
 footerStyle = footer ? do
@@ -67,13 +66,14 @@ bodyStyle :: Css
 bodyStyle = body ? do
   defaultFontFamily
   paddingTop $ px 50
+
 sectionSetting :: Css
 sectionSetting = section |> (C.div # byClass "container") ? do
   paddingTop    $ px 40
   paddingBottom $ px 40
 mainTextStyle :: Css
 mainTextStyle = byClass "main-text" & do
-  paddingLeft  $ px 60
-  paddingRight $ px 60
+  paddingLeft  $ px 30
+  paddingRight $ px 30
   background    white
   return ()
